@@ -1,0 +1,75 @@
+{% extends 'math_app/base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block namepage %}
+    {{title}}
+{% endblock %}
+
+{% block content1 %}
+    <form   method="post"  enctype="multipart/form-data"  >
+        {% csrf_token %}
+
+  <table width="100%" cellspacing="0" cellpadding="5">
+   <tr>
+    <td width="100" valign="top">
+        <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-body">
+        <label for="{{form.theme.id_for_level}}">{{form.theme.label}}</label>
+        <div>
+            {{form.theme}}
+        </div>
+        <br>
+        <label for="{{form.numtask.id_for_label}}">{{form.numtask.label}}</label>{{form.numtask}}
+        <br>
+        <label for="{{form.variant.id_for_label}}">{{form.variant.label}}</label>{{form.variant}}
+        <br>
+        <label for="{{form.variant.id_for_level}}">{{form.level.label}}</label> {{form.level}}
+
+
+            </div>
+        </div>
+        </div>
+    </td>
+    <td valign="top">
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <label for="{{form.question.id_for_label}}">{{form.question.label}}</label>
+            </div>
+            <div>
+                {{form.question}}
+            </div>
+        </div>
+    </td>
+   </tr>
+
+   <tr>
+
+      <td>
+          {% if image %}
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <img src="{{image.url}}" width="200" height="200">
+                </div>
+            </div>
+          {% endif %}
+          <div class="card-body">
+                {{form.img}}
+            </div>
+      </td>
+       <td>
+           <div class="card-body">
+                <button type="submit">Сохранить</button>
+            </div>
+       </td>
+   </tr>
+
+  </table>
+
+
+    </form>
+
+{% endblock %}

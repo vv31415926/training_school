@@ -1,0 +1,79 @@
+<!-- Begin Page Content -->
+{% extends 'math_app/base.html' %}
+
+{% block title %}
+    #######{{nametable}}##########
+{% endblock %}
+
+{% block namepage %}
+
+{% endblock %}
+
+{% block content1 %}
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <!--h1 class="h3 mb-2 text-gray-800">Таблица</h1-->
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">{{nametable}}</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Имя</th>
+                                            <th>Класс</th>
+                                            <th>Студент</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Имя</th>
+                                            <th>Класс</th>
+                                            <th>Студент</th>
+                                        </tr>
+                                    </tfoot>
+
+                                    <tbody>
+                                    <form   method="post">
+                                        {{form.as_p}}
+                                        {% for f in form %}
+                                        --{{f.last_name}}--
+                                        {% endfor %}
+                                    {% csrf_token %}
+
+                                        {%  for item in users %}
+                                            <tr>
+                                                <td>
+                                                    <!--{{item}}--{{ item.get_absolute_url }}<br-->
+                                                        {{item.users.last_name}} &nbsp {{item.users.first_name}}
+                                                </td>
+
+                                                <td>
+                                                    {{item.users.num_class}}{{item.users.letter_class}}
+                                                </td>
+
+                                                <td>
+                                                    {{item.users.is_student}}
+                                                </td>
+                                                <td>
+                                                    {{item.select}}
+                                                </td>
+
+                                            </tr>
+                                        {% endfor %}
+
+                                    </form>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+{% endblock %}
