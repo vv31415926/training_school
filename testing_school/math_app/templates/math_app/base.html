@@ -79,10 +79,10 @@
                             {%if user.pk %}
                                 <a class="collapse-item" href="{% url 'mathapp:user_lessons' student_id=user.pk %}"> Уроки </a>
                             {%endif%}
-                        {% else %}
+                        {% endif %}
                             <a class="collapse-item" href="{% url 'userapp:users_table' %}">Студенты</a>
                             <a class="collapse-item" href="{% url 'mathapp:tasks_table' %}">Задачи</a>
-                        {% endif %}
+
 
 
                     </div>

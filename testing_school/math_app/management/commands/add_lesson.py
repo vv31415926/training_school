@@ -9,11 +9,12 @@ class Command( BaseCommand ):
         # уроки
 
         stud = MathUser.objects.all()
-        tsk = Task.objects.all()
+        task = Task.objects.all()
 
         # Каждому студенту назначается задача.  На которую он случайно отвечает
         for s in stud:
-            s_id = s.id
-            for t in tsk:
-                t_id = t.id
-                Lesson.objects.create(answer=0, student_id=s_id, task_id=t_id)
+            if s.is_student:
+                s_id = s.id
+                for t in task:
+                    t_id = t.id
+                    Lesson.objects.create( student_id=s_id, task_id=t_id)

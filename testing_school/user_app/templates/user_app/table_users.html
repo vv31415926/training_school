@@ -29,6 +29,7 @@
                                             <th>Почта</th>
                                             <th>Класс</th>
                                             <th>Студент</th>
+                                            <th>Уроков</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -37,6 +38,7 @@
                                             <th>Почта</th>
                                             <th>Класс</th>
                                             <th>Студент</th>
+                                            <th>Уроков</th>
                                         </tr>
                                     </tfoot>
 
@@ -58,7 +60,14 @@
                                                 </td>
 
                                                 <td>
-                                                    {{item.is_student}}
+                                                    {% if item.is_student %}
+                                                        Да
+                                                    {% else %}
+                                                        Нет
+                                                    {%endif%}
+                                                </td>
+                                                <td>
+                                                    {{ item.get_count_lessons }}
                                                 </td>
 
                                             </tr>
