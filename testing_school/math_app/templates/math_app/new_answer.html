@@ -1,0 +1,39 @@
+{% extends 'math_app/base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block namepage %}
+{% endblock %}
+
+{% block img1 %}
+{% endblock %}
+
+
+
+{% block content1 %}
+{{ obj.get_absolute_url }}
+<br>
+<form  method="post"  enctype="multipart/form-data"  >
+        {% csrf_token %}
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <label for="{{form.answer.id_for_label}}">{{form.name.label}}</label>{{form.name}}
+            </div>
+            <div class="card-body">
+                <label for="{{form.correct.id_for_label}}">{{form.correct.label}}</label>{{form.correct}}
+            </div>
+            <!--div class="card-body">
+                <label for="{{form.task.id_for_label}}">{{form.task.label}}</label>{{form.task}}
+            </div-->
+            <div class="card-body">
+                <button type="submit">Сохранить</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+{% endblock %}

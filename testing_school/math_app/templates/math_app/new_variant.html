@@ -1,0 +1,48 @@
+{% extends 'math_app/base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block namepage %}
+    {{title}}
+{% endblock %}
+
+{% block content1 %}
+<form   method="post"  enctype="multipart/form-data"  >
+  {% csrf_token %}
+  <table width="100%" cellspacing="0" cellpadding="5">
+   <tr>
+    <td width="100" valign="top">
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <label for="{{form.question.id_for_label}}">{{form.question.label}}</label>
+                    {{form.question}}
+                    <br>
+                    <label for="{{form.level.id_for_label}}">{{form.level.label}}</label>
+                    {{form.level}}
+                    <br>
+                    <div class="card-body">
+                        {{form.img}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+    </tr>
+
+   <tr>
+      <td>
+              <div>
+              <button type="submit">Добавить</button>
+              </div>
+      </td>
+      <td> </td>
+   </tr>
+
+  </table>
+
+    </form>
+
+{% endblock %}

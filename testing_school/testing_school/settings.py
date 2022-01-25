@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #'math_app',
-    #'user_app',
     'math_app.apps.MathAppConfig',
     'user_app.apps.UserAppConfig',
 ]

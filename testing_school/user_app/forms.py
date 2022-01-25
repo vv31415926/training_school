@@ -28,6 +28,18 @@ class SelectUserForm( forms.Form ):
     #sel = forms.ChoiceField(  widget=forms.RadioSelect, choices=CHOICES)
     #content = forms.CharField(widget=forms
 
+# class UserLessonForm( forms.ModelForm ):
+#     student = forms.ModelMultipleChoiceField(
+#         queryset=MathUser.objects.filter( is_student=True ),
+#         widget=forms.CheckboxSelectMultiple()
+#     )
+#     class Meta:
+#         model = MathUser
+#         fields = ('last_name', 'first_name')
+
+
+
+
 
 
 

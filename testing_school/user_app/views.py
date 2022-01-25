@@ -2,12 +2,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import *
 from .models import *
 from math_app.models import *
 from .forms import *
+from math_app.forms import *
 
 class UserLoginView( LoginView ):
     # form_class = LoginForm    ошибка
@@ -23,20 +24,20 @@ class UserRegisterView( CreateView ):
     form_class = RegisterForm #UserCreationForm    # стандарт django
     success_url = reverse_lazy( 'mathapp:index' )
 
-
-class UsersTable( UserPassesTestMixin, ListView ):
+class StudentTable( UserPassesTestMixin, ListView ):
     model = MathUser
     template_name = 'user_app/table_users.html'
     context_object_name = 'users'
     #success_url = reverse_lazy('userapp:users_table')
+    paginate_by = 3
 
     def get_context_data(self, *, object_list=None, **kwargs ):
         context = super().get_context_data( **kwargs )
         context['nametable'] = 'Список пользователей'
         return context
-
-    # def get_queryset(self):
-    #     return MathUser.objects.filter( is_student=True  )
+    def get_queryset(self):
+        return MathUser.objects.filter(is_student=True)
+        #return get_object_or_404(MathUser, is_student=True)
     def test_func(self):  # UserPassesTestMixin
         return self.request.user.is_superuser
 
@@ -74,6 +75,32 @@ class SelectUser( ListView ):
         context['users'] = lst_data
         return context
 
+# class lessonVariantCreate( CreateView ):
+#     model = Lesson
+#     template_name = 'math_app/variant_detail.html'
+#     success_url = ''
+#     form_class = StudentLessonForm
+#
+#     def post(self, request, *args, **kwargs):
+#         print('>>>>>>>>>>>>>>>>> kwargs[variant_id]=', kwargs['variant_id'])
+#         self.variant_id = kwargs['variant_id']
+#         return super().post( request, *args, **kwargs )
+#     def form_valid(self, form):
+#         print('>>>>>>>>>>>>>>>>> form_valid' )
+#         #print('>>>>>>>>>>>>>>>>> form=', form )
+#         #print('>>>>>>>>>>>>>>>>> form=', form.)
+#         variant = get_object_or_404( Variant, pk=self.variant_id )
+#         form.instance.variant = variant
+#         self.task_id = variant.task_id
+#         return super().form_valid( form )
+#     def get_success_url(self):
+#         #return reverse( 'mathapp:variant_detail', kwargs={'variant_id':self.variant_id } )
+#         return reverse('mathapp:variants_task', kwargs={'task_id': self.task_id})
+
+
+
+
+
 def test_view( request ):
     if request.method == 'POST':
         print('----------- POST')
@@ -105,7 +132,7 @@ def test_view( request ):
 
 # class UserLessons( ListView ):
 #     model = Lesson
-#     template_name = 'math_app/lesson.html'
+#     template_name = 'math_app/lessons_user.html'
 #     context_object_name = 'student_lessons'
 #     pk_url_kwarg = 'student_id'
 #

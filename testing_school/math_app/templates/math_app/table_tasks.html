@@ -17,6 +17,18 @@
         Добавить
     </a>
 
+    <!--div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <form href="{% url 'mathapp:tasks_table' %}" method="post">
+        {% csrf_token %}
+    <select name="seltheme">
+    {%for item in theme %}
+           <option value="{{item.num}}">{{item.name}}</option>
+    {%endfor%}
+    </select>
+    <input type="submit" value="Применить">
+    </form>
+    </div-->
+
 {% endblock %}
 
 
@@ -98,7 +110,7 @@
                                             <a href="{% url 'userapp:select_user' %}" class="collapse-item">
                                                 <div class="flex-nowrap ">
                                                 <i class="fas fas fa-share-alt"></i>
-                                                    Назначить
+                                                    Назначить >
                                                 </div>
                                             </a>
                                     </td>

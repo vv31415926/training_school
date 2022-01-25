@@ -80,11 +80,15 @@
                         <h6 class="collapse-header">Данные:</h6>
                         {% if not user.is_superuser %}
                             {%if user.pk %}
-                                <a class="collapse-item" href="{% url 'mathapp:user_lessons' student_id=user.pk %}"> Уроки </a>
+                                <a class="collapse-item" href="{% url 'mathapp:assigned_lessons' mathuser_id=user.pk %}"> Уроки </a>
                             {%endif%}
-                        {% endif %}
+                        {% else %}
+                            <a class="collapse-item" href="{% url 'math_app:partitions' %}">Разделы</a>
                             <a class="collapse-item" href="{% url 'userapp:users_table' %}">Студенты</a>
-                            <a class="collapse-item" href="{% url 'mathapp:tasks_table' %}">Задачи</a>
+                        {% endif %}
+
+                            {#<a class="collapse-item" href="{% url 'mathapp:tasks_table' %}">Задачи</a>  #}
+
 
 
 
@@ -269,12 +273,10 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">{% block namepage %} {% endblock %}</h1>
+                        <div> {% block goto %} {% endblock %} </div>
+                        <h4 >{% block namepage %} {% endblock %}</h4>
                         <div>
-
                         {% block button %} {% endblock %}
-
-
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                             <i class="fas fa-download fa-sm text-white-50"></i>
                             Отчеты
