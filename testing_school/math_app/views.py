@@ -76,7 +76,7 @@ class VariantsTask( ListView ):
     template_name = 'math_app/variants_task.html'
     context_object_name = 'variants'
     pk_url_kwarg = 'task_id'
-    paginate_by = 2
+    paginate_by = 3
     #success_url = reverse_lazy('mathapp:tasks_theme')
     def get_context_data( self, *, object_list=None, **kwargs ):
         context = super().get_context_data( **kwargs )
