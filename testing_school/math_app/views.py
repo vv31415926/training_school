@@ -86,7 +86,8 @@ class VariantsTask( ListView ):
         #context['image'] = self.get_queryset()[0].img
         return context
     def get_queryset(self):
-        return Variant.objects.filter( task_id=self.kwargs['task_id'] )
+        return Variant.objects.select_related('level').filter( task_id=self.kwargs['task_id'] )
+        #return Variant.objects.filter(task_id=self.kwargs['task_id'])
 
 class NewVariant( CreateView ):
     model = Variant
@@ -164,12 +165,12 @@ class LessonsUser( ListView ):
         #print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  self.kwargs[mathuser_id]=', self.kwargs['mathuser_id'])
         context = super().get_context_data( **kwargs )
         context['title'] = 'уроки'
-        if len(self.get_queryset()) > 0:
-            context['namepage'] = self.get_queryset()[0].mathuser
+        #if len(self.get_queryset()) > 0:
+        context['namepage'] = self.get_queryset()[0].mathuser
         return context
     def get_queryset(self):
-        return Lesson.objects.filter( mathuser_id=self.kwargs['mathuser_id']  )
-
+        return Lesson.objects.select_related('variant','mathuser').filter( mathuser_id=self.kwargs['mathuser_id']  )
+        #return Lesson.objects.filter(mathuser_id=self.kwargs['mathuser_id'])
 
 class AssignedLessons( ListView ):
     model = Lesson

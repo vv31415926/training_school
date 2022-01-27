@@ -51,7 +51,7 @@
                                                 </td>
                                                 <td>
                                                     <a class="collapse-item" href="{% url 'mathapp:lessons_user' mathuser_id=item.id %}">
-                                                        {{ item.get_count_lessons }}
+                                                        {{ item.get_count_lessons|length }}
                                                     </a>
                                                 </td>
 

@@ -32,7 +32,7 @@
     {%  for item in variants %}
     <tr>
         <td>
-                    Уровень: {{item.level.name}}   &nbsp&nbsp
+                    Уровень: {{item.level.name}}
 
                     <a href="{% url 'mathapp:variant_assign'  variant_id=item.id  task_id=taskid  theme_id=themeid %}" class="collapse-item">
                     <div class="flex-nowrap ">

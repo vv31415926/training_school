@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import *
+
 from .models import *
 from math_app.models import *
 from .forms import *
@@ -29,15 +30,15 @@ class StudentTable( UserPassesTestMixin, ListView ):
     template_name = 'user_app/table_users.html'
     context_object_name = 'users'
     #success_url = reverse_lazy('userapp:users_table')
-    paginate_by = 3
+    paginate_by = 7
 
     def get_context_data(self, *, object_list=None, **kwargs ):
         context = super().get_context_data( **kwargs )
         context['nametable'] = 'Список пользователей'
         return context
     def get_queryset(self):
-        return MathUser.objects.filter(is_student=True)
-        #return get_object_or_404(MathUser, is_student=True)
+        #return MathUser.objects.filter(is_student=True)
+        return MathUser.student_objectsx.all()     #.filter(is_student=True)
     def test_func(self):  # UserPassesTestMixin
         return self.request.user.is_superuser
 
