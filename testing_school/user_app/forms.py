@@ -14,7 +14,7 @@ class RegisterForm( UserCreationForm ):
     class Meta( UserCreationForm.Meta ):
         model = MathUser
         fields = UserCreationForm.Meta.fields + ('email', 'last_name', 'first_name', 'num_class', 'letter_class')
-        # UserCreationForm.Meta.fields  - id, email(переопр), password, last_login, is_superuser, is_staff, is_active, date_joined
+        # где UserCreationForm.Meta.fields содержит: id, email(переопр), password, last_login, is_superuser, is_staff, is_active, date_joined
         #fields = ('email', 'last_name', 'first_name', 'num_class', 'letter_class')
 
 class UserForm( forms.ModelForm ):
@@ -27,6 +27,18 @@ class SelectUserForm( forms.Form ):
     select = forms.BooleanField(required=False)
     #sel = forms.ChoiceField(  widget=forms.RadioSelect, choices=CHOICES)
     #content = forms.CharField(widget=forms
+
+# class UserLessonForm( forms.ModelForm ):
+#     student = forms.ModelMultipleChoiceField(
+#         queryset=MathUser.objects.filter( is_student=True ),
+#         widget=forms.CheckboxSelectMultiple()
+#     )
+#     class Meta:
+#         model = MathUser
+#         fields = ('last_name', 'first_name')
+
+
+
 
 
 

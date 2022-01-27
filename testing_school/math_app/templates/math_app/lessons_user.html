@@ -25,35 +25,31 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Ответ</th>
-                                <th>Результат</th>
-                                <th>Задача</th>
-                                <th>выполнить</th>
+                                <th>Статус</th>
+                                <th>Вариант.Условие</th>
+                                <th>Создание</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Ответ</th>
-                                <th>Результат</th>
-                                <th>Задача</th>
-                                <th>выполнить</th>
+                                <th>Статус</th>
+                                <th>Вариант.Условие</th>
+                                <th>Создание</th>
                             </tr>
                         </tfoot>
 
                         <tbody>
                             {%  for item in lessons %}
-
                                 <tr>
                                     <td>
-                                           {{item.answer}} &nbsp {{item.name}}
+                                           {{item.status}}
                                     </td>
                                     <td>
-                                        {{item.correctly}}
+                                        {{item.variant.num}}.&nbsp{{item.variant.question}}
                                     </td>
                                     <td>
-                                        {{item.task}}
+                                        {{item.create_lesson|date:'d-m-Y'}}
                                     </td>
-
                                 </tr>
                             {% endfor %}
                         </tbody>

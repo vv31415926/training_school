@@ -1,0 +1,33 @@
+{% extends 'math_app/base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block namepage %}
+    {{namepage}}
+{% endblock %}
+
+{% block content1 %}
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <tr>
+        <th>Разделы</th>
+        <th>Темы</th>
+    </tr>
+    {%  for item in partitions %}
+    <tr>
+        <td>
+            {{item.num}} &nbsp-&nbsp {{item.name}}
+        </td>
+        <td>
+            {%  for item_theme in item.get_theme_partition %}
+                <a class="collapse-item" href="{% url 'mathapp:tasks_theme' theme_id=item_theme.pk %}">{{item_theme}}</a> <br>
+            {%endfor%}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}
