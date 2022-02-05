@@ -1,6 +1,7 @@
 from django.db import models
 from django.views.generic import *
 from django.urls import reverse
+from django.contrib.auth.models import UserManager
 
 #import user_app
 from user_app.models import MathUser

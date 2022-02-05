@@ -38,7 +38,8 @@ class StudentTable( UserPassesTestMixin, ListView ):
         return context
     def get_queryset(self):
         #return MathUser.objects.filter(is_student=True)
-        return MathUser.student_objectsx.all()     #.filter(is_student=True)
+        #return MathUser.student_objects.all()     #.filter(is_student=True)
+        return MathUser.objects.filter( is_student=True )
     def test_func(self):  # UserPassesTestMixin
         return self.request.user.is_superuser
 

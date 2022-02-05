@@ -161,12 +161,13 @@ class LessonsUser( ListView ):
     pk_url_kwarg = 'mathuser_id'
 
     def get_context_data( self, *, object_list=None, **kwargs ):
-        #print( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',self.kwargs.keys())
-        #print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  self.kwargs[mathuser_id]=', self.kwargs['mathuser_id'])
         context = super().get_context_data( **kwargs )
+        #print(  "=================", context.keys())
         context['title'] = 'уроки'
-        #if len(self.get_queryset()) > 0:
-        context['namepage'] = self.get_queryset()[0].mathuser
+        if len(self.get_queryset()) > 0:
+            context['namepage'] = self.get_queryset()[0].mathuser
+        else:
+            context['namepage'] = 'Нет данных'
         return context
     def get_queryset(self):
         return Lesson.objects.select_related('variant','mathuser').filter( mathuser_id=self.kwargs['mathuser_id']  )
@@ -177,11 +178,13 @@ class AssignedLessons( ListView ):
     template_name = 'math_app/assigned_lesson.html'
     context_object_name = 'lessons'
     pk_url_kwarg = 'mathuser_id'
-
     def get_context_data( self, *, object_list=None, **kwargs ):
         context = super().get_context_data( **kwargs )
         context['title'] = 'уроки'
-        context['obj'] = self.get_queryset()[0]
+        if len(self.get_queryset()) > 0:
+            context['obj'] = self.get_queryset()[0]
+        else:
+            context['obj'] = 'Нет данных'
         return context
     def get_queryset(self):
         return Lesson.objects.filter( mathuser_id=self.kwargs['mathuser_id']  )
