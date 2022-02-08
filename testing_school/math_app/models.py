@@ -36,7 +36,7 @@ class Theme( models.Model ):
         verbose_name_plural = 'Темы'
         ordering = ['name']
     def __str__(self):
-        return f'{self.num}-{self.name}'
+        return f'{self.name}'
 
 class Task( models.Model ):
     '''
@@ -49,7 +49,7 @@ class Task( models.Model ):
     set_time = models.IntegerField( default=0 , verbose_name='Время на выполнение')
     theme = models.ForeignKey('Theme', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Тема')
     def __str__(self):
-        return f'{self.num}: {self.name}'
+        return f'{self.name}'
     # def get_absolute_url(self):
     #     return reverse( 'mathapp:task_theme',  kwargs={'theme_id':self.pk} )
     class Meta:
@@ -76,7 +76,7 @@ class Variant( models.Model ):
             s = str( self.question )[0:30]
             return f'{s}...'
         else:
-            return f'{self.num}. {self.question }'
+            return f'{self.question}'
     class Meta:
         verbose_name = 'Условие'
         verbose_name_plural = 'Условия'
@@ -99,7 +99,7 @@ class Answer(models.Model):
     is_close = models.BooleanField(default=False, verbose_name= 'Закрыто' )
     variant = models.ForeignKey('Variant', on_delete=models.CASCADE, null=True, verbose_name= 'Условие варианта задачи' )
     def __str__(self):
-        return f'{self.answer}'
+        return f'{self.name}'
     # def get_absolute_url(self):
     #     return reverse( 'mathapp:version_one',  kwargs={'version_id':self.pk} )
     class Meta:
@@ -118,7 +118,7 @@ class Lesson( models.Model ):
     end_answer = models.DateTimeField(null=True, blank=True, verbose_name= 'Конец ответа')
     create_lesson = models.DateTimeField( auto_now_add=True, verbose_name= 'Создание урока')
 
-    answer = models.ForeignKey(  'Answer', on_delete=models.CASCADE , null=True, verbose_name= 'Ответ')
+    answer = models.ForeignKey(  'Answer', on_delete=models.CASCADE , null=True, blank=True, verbose_name= 'Ответ')
     variant = models.ForeignKey(  'Variant', on_delete=models.CASCADE , null=True, verbose_name= 'Вариант задачи')     #? , null=True
     mathuser = models.ForeignKey( 'user_app.MathUser',
                                   on_delete=models.CASCADE,
@@ -140,7 +140,7 @@ class Level( models.Model ):
     num = models.IntegerField()
     name = models.CharField( max_length=16 )
     def __str__(self):
-        return f'{self.num}-{self.name}'
+        return f'{self.name}'
     class Meta:
         verbose_name = 'Уровень'
         verbose_name_plural = 'Уровни'

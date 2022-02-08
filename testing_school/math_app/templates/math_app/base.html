@@ -83,15 +83,9 @@
                                 <a class="collapse-item" href="{% url 'mathapp:assigned_lessons' mathuser_id=user.pk %}"> Уроки </a>
                             {%endif%}
                         {% else %}
-                            <a class="collapse-item" href="{% url 'math_app:partitions' %}">Разделы</a>
-                            <a class="collapse-item" href="{% url 'userapp:users_table' %}">Студенты</a>
+                            <a class="collapse-item" href="{% url 'user_app:users_table' %}">Студенты</a>
                         {% endif %}
-
-                            {#<a class="collapse-item" href="{% url 'mathapp:tasks_table' %}">Задачи</a>  #}
-
-
-
-
+                        <a class="collapse-item" href="{% url 'math_app:partitions' %}">Разделы</a>
                     </div>
                 </div>
             </li>

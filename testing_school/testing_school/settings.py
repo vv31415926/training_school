@@ -4,6 +4,8 @@ from pathlib import Path
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import rest_framework.permissions
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -36,15 +38,27 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',
     'debug_toolbar',
+    'rest_framework',
+    'rest_framework.authtoken',
 
     'django_cleanup.apps.CleanupConfig',    #  всегда последней !!!
 ]
 
 REST_FRAMEWORK = {
-        'DEFAULT_PERMISSION CLASSES':['rest_framework.permissions.DjangoModalPermissionsOrAnnonReadOnly']
+    'DEFAULT_PERMISSION_CLASSES': [
+        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+
+
+
 }
+
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
