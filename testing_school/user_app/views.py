@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import *
+from rest_framework.authtoken.models import Token
 
 from .models import *
 from math_app.models import *
@@ -77,6 +78,52 @@ class SelectUser( ListView ):
         context['users'] = lst_data
         return context
 
+class UserProfileView(  DetailView ):
+    template_name = 'user_app/profile.html'
+    model = MathUser
+    context_object_name = 'mathuser'
+
+def update_token( request ):
+    user = request.user
+    if user:
+        #t = Token.objects.get(user=user)
+        t = Token.objects.filter(user=user)
+        if len(t) > 0:
+            t[0].delete()
+    Token.objects.create( user=user )
+    return HttpResponseRedirect( reverse( 'user_app:user_profile', kwargs={'pk':user.pk} )  )
+
+
+# def test_view( request ):
+#     if request.method == 'POST':
+#         print('----------- POST')
+#         formset = SomeFormSet(  request.POST  )
+#         #form = TestForm(  request.POST )
+#         if formset.is_valid():
+#         #if form.is_valid():
+#             print( '------valid------ ' )
+#             d = formset.cleaned_data
+#             print( type(d) )
+#             for item in d:
+#                 print( 'sel=',item['sel'], 'stud=',item['stud'] )
+#             return HttpResponseRedirect('/select_user/')
+#             # print(type(form))
+#             # print( form.cleaned_data )
+#             #f = formset.cleaned_data
+#             #print(f['stud'])
+#             #print(f['sel'])
+#             # for f in form.cleaned_data:
+#             #     print( f.sel )
+#             #return HttpResponseRedirect(  '/select_user/' )
+#         else:
+#             print('------valid------ ERROR ')
+#     else:
+#         print('----------- GET')
+#         formset = FormSet()
+#     return render( request, 'user_app/test.html', {'formset':formset} )
+
+
+
 # class lessonVariantCreate( CreateView ):
 #     model = Lesson
 #     template_name = 'math_app/variant_detail.html'
@@ -98,40 +145,6 @@ class SelectUser( ListView ):
 #     def get_success_url(self):
 #         #return reverse( 'mathapp:variant_detail', kwargs={'variant_id':self.variant_id } )
 #         return reverse('mathapp:variants_task', kwargs={'task_id': self.task_id})
-
-
-
-
-
-def test_view( request ):
-    if request.method == 'POST':
-        print('----------- POST')
-        formset = SomeFormSet(  request.POST  )
-        #form = TestForm(  request.POST )
-        if formset.is_valid():
-        #if form.is_valid():
-            print( '------valid------ ' )
-            d = formset.cleaned_data
-            print( type(d) )
-            for item in d:
-                print( 'sel=',item['sel'], 'stud=',item['stud'] )
-            return HttpResponseRedirect('/select_user/')
-            # print(type(form))
-            # print( form.cleaned_data )
-            #f = formset.cleaned_data
-            #print(f['stud'])
-            #print(f['sel'])
-            # for f in form.cleaned_data:
-            #     print( f.sel )
-            #return HttpResponseRedirect(  '/select_user/' )
-        else:
-            print('------valid------ ERROR ')
-    else:
-        print('----------- GET')
-        formset = FormSet()
-    return render( request, 'user_app/test.html', {'formset':formset} )
-
-
 # class UserLessons( ListView ):
 #     model = Lesson
 #     template_name = 'math_app/lessons_user.html'

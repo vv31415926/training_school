@@ -32,15 +32,17 @@
     {%  for item in variants %}
     <tr>
         <td>
-                    Уровень: {{item.level.name}}
-
+            <div> Уровень: {{item.level.name}}</div>
+            {% if user.is_superuser %}
+                <div class="flex-nowrap ">
                     <a href="{% url 'mathapp:variant_assign'  variant_id=item.id  task_id=taskid  theme_id=themeid %}" class="collapse-item">
-                    <div class="flex-nowrap ">
+
                         <i class="fas fas fa-share-alt"></i>
                         Назначить>
-                    </div>
                     </a>
-             {{item.question}}
+                </div>
+            {% endif %}
+            {{item.question}}
         </td>
         <td>
             {% if item.is_image %}
@@ -48,11 +50,13 @@
             {% endif %}
         </td>
         <td>
-            <div>
-                <a href="{% url 'mathapp:answer_new' variant_id=item.id task_id=taskid  theme_id=themeid %}"  class="collapse-item">
-                    <i class="fas fa-plus-circle"></i> Добавить
-                </a>
-            </div>
+            {% if user.is_superuser %}
+                <div>
+                    <a href="{% url 'mathapp:answer_new' variant_id=item.id task_id=taskid  theme_id=themeid %}"  class="collapse-item">
+                        <i class="fas fa-plus-circle"></i> Добавить
+                    </a>
+                </div>
+            {% endif %}
             <lo>
                  {%  for v in item.get_variant_answers %}
                         <li>

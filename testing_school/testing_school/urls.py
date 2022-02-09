@@ -4,7 +4,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import  static
 from math_app.api_views import *
-from user_app.api_views import *
+# from user_app.api_views import *
 
 from rest_framework import routers
 
@@ -16,7 +16,7 @@ router.register( 'level', LevelViewSet )
 router.register( 'partition', PartitionViewSet )
 router.register( 'lesson', LessonViewSet )
 router.register( 'answer', AnswerViewSet )
-router.register( 'mathuser', MathUserViewSet )
+# router.register( 'mathuser', MathUserViewSet )
 
 urlpatterns = [
     path('admin/', admin.site.urls),

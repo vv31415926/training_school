@@ -86,7 +86,11 @@
                             <a class="collapse-item" href="{% url 'user_app:users_table' %}">Студенты</a>
                         {% endif %}
                         <a class="collapse-item" href="{% url 'math_app:partitions' %}">Разделы</a>
-                    </div>
+
+                        {% if user.is_authenticated %}
+                            <a class="collapse-item" href="{% url 'user_app:user_profile' pk=user.pk %}">Профиль</a>
+                        {% endif %}
+                     </div>
                 </div>
             </li>
 
@@ -239,10 +243,12 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Уроки
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Личный кабинет
-                                </a>
+                                {% if user.is_authenticated %}
+                                    <a class="dropdown-item" href="{% url 'user_app:user_profile' pk=user.pk %}">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Профиль
+                                    </a>
+                                {% endif %}
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     История
@@ -270,7 +276,11 @@
                         <div> {% block goto %} {% endblock %} </div>
                         <h4 >{% block namepage %} {% endblock %}</h4>
                         <div>
-                        {% block button %} {% endblock %}
+
+                        {% if user.is_superuser %}
+                            {% block button %} {% endblock %}
+                        {% endif %}
+
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                             <i class="fas fa-download fa-sm text-white-50"></i>
                             Отчеты

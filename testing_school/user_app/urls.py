@@ -11,13 +11,12 @@ urlpatterns = [
 
     path( 'table-user/',   StudentTable.as_view(), name='users_table' ),
 
-    path( 'select_user/',   SelectUser.as_view(), name='select_user' ),
+    path( 'profile/<int:pk>/',  UserProfileView.as_view() , name='user_profile' ),
+    path( 'update-token/', update_token, name='update_token' ),
 
-    #path( 'create-lesson/<int:variant_id>',   lessonVariantCreate.as_view(), name='create_lesson' ),
+    #path( 'test/',   test_view, name='test' ),
 
-
-
-    path( 'test/',   test_view, name='test' ),
-
+    # path( 'select_user/',   SelectUser.as_view(), name='select_user' ),
+    # path( 'create-lesson/<int:variant_id>',   lessonVariantCreate.as_view(), name='create_lesson' ),
     #path('student/<int:user_id>/',   ShowUser.as_view(), name='user_one'),
 ]
