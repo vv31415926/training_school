@@ -1,0 +1,47 @@
+{% extends 'math_app/base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block namepage %}
+    {{namepage}}
+{% endblock %}
+
+{% block goto %}
+    <a href="{% url 'mathapp:partitions' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <i class="fas fa-angle-double-left"></i>назад
+    </a>
+{% endblock %}
+
+{% block button %}
+        <a href="{% url 'mathapp:task_new' theme_id=themeid  %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus-circle  text-white-50"></i>
+            Добавить
+        </a>
+{% endblock %}
+
+{% block content1 %}
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <tr>
+        <th>Наименование</th>
+    </tr>
+    {%  for item in tasks_theme %}
+    <tr>
+        <td>
+            {{item.num}} &nbsp-&nbsp {{item.name}}
+        </td>
+        <td>
+            <a class="collapse-item" href="{% url 'mathapp:variants_task'  theme_id=themeid   task_id=item.id %}">
+                Варианты &nbsp{{item.get_count_variant}}
+            </a>
+        </td>
+        <!--td>
+            {#<a class="collapse-item" href="{% url 'mathapp:assign_task'  theme_id=themeid   task_id=item.id %}">#}
+                {#Назначить#}
+            {#</a>#}
+        </td-->
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

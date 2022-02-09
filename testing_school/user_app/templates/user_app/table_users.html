@@ -1,5 +1,6 @@
-<!-- Begin Page Content -->
 {% extends 'math_app/base.html' %}
+
+{% block goto %}  <a href="javascript:history.back()">назад</a>  {% endblock %}
 
 {% block title %}
     {{nametable}}
@@ -26,17 +27,15 @@
                                     <thead>
                                         <tr>
                                             <th>Имя</th>
-                                            <th>Почта</th>
                                             <th>Класс</th>
-                                            <th>Студент</th>
+                                            <th>Уроков</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Имя</th>
-                                            <th>Почта</th>
                                             <th>Класс</th>
-                                            <th>Студент</th>
+                                            <th>Уроков</th>
                                         </tr>
                                     </tfoot>
 
@@ -48,25 +47,43 @@
                                                     <!--{{item}}--{{ item.get_absolute_url }}<br-->
                                                         {{item.last_name}} &nbsp {{item.first_name}}
                                                 </td>
-
-                                                <td>
-                                                    {{item.email}}
-                                                </td>
-
                                                 <td>
                                                     {{item.num_class}}{{item.letter_class}}
                                                 </td>
-
                                                 <td>
-                                                    {{item.is_student}}
+                                                    <a class="collapse-item" href="{% url 'mathapp:lessons_user' mathuser_id=item.id %}">
+                                                        {{ item.get_count_lessons|length }}
+                                                    </a>
                                                 </td>
 
                                             </tr>
                                         {% endfor %}
 
                                     </tbody>
-
                                 </table>
+
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; начало</a>
+            <a href="?page={{ page_obj.previous_page_number }}">предыдущий</a>
+        {% endif %}
+
+        <span class="current">
+            стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">далее</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">конец &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,53 @@
+{% extends 'math_app/base.html' %}
+
+{% block goto %} {% endblock %}
+
+{% block title %}
+    Профиль
+{% endblock %}
+
+{% block namepage %}
+    Профиль пользователя: {{mathuser.username}}
+{% endblock %}
+
+{% block content1 %}
+
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+<tr>
+    <td>Токен</td>
+    <td>
+            {% if mathuser.auth_token %}
+                {{mathuser.auth_token}}
+            {% else %}
+                не создан
+            {% endif %}
+    </td>
+</tr>
+<tr>
+    <td>ФИО</td><td>{{mathuser.last_name}}&nbsp{{mathuser.first_name}}</td>
+</tr>
+<tr>
+    <td>Почта</td><td>{{mathuser.email}}</td>
+</tr>
+<tr>
+    <td>Класс</td><td>{{mathuser.num_class}}&ndsp{{mathuser.letter_class}}</td>
+</tr>
+<tr>
+    <td>Администратор</td>
+    <td>{% if mathuser.is_superuser %}
+            Да
+        {% else %}
+            Нет
+        {% endif %}
+    </td>
+</tr>
+
+</table>
+
+    <div>
+    <form action="{% url 'user_app:update_token' %}">
+        <button type="submit" class="btn btn-primary">Обновить токен</button>
+    </form>
+    </div>
+
+{% endblock %}

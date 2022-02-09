@@ -1,0 +1,96 @@
+{% extends 'math_app/base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block namepage %}
+    {{title}}
+{% endblock %}
+
+{% block goto %}
+    <a href="{% url 'mathapp:tasks_theme' theme_id=themeid  %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <i class="fas fa-angle-double-left"></i>назад
+    </a>
+{% endblock %}
+
+{% block button %}
+
+    <a href="{% url 'mathapp:variant_new' task_id=taskid  theme_id=themeid%}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle  text-white-50"></i>
+        Добавить
+    </a>
+{% endblock %}
+
+{% block content1 %}
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <tr>
+         <th>Условие</th>
+        <th>Чертёж</th>
+        <th>Ответы</th>
+    </tr>
+    {%  for item in variants %}
+    <tr>
+        <td>
+            <div> Уровень: {{item.level.name}}</div>
+            {% if user.is_superuser %}
+                <div class="flex-nowrap ">
+                    <a href="{% url 'mathapp:variant_assign'  variant_id=item.id  task_id=taskid  theme_id=themeid %}" class="collapse-item">
+
+                        <i class="fas fas fa-share-alt"></i>
+                        Назначить>
+                    </a>
+                </div>
+            {% endif %}
+            {{item.question}}
+        </td>
+        <td>
+            {% if item.is_image %}
+                <img src="{{item.img.url}}" width="100" height="100">
+            {% endif %}
+        </td>
+        <td>
+            {% if user.is_superuser %}
+                <div>
+                    <a href="{% url 'mathapp:answer_new' variant_id=item.id task_id=taskid  theme_id=themeid %}"  class="collapse-item">
+                        <i class="fas fa-plus-circle"></i> Добавить
+                    </a>
+                </div>
+            {% endif %}
+            <lo>
+                 {%  for v in item.get_variant_answers %}
+                        <li>
+                                                        {#<a class="collapse-item" href="{{ v.get_absolute_url }}">#}
+                            {% autoescape off %}
+                                {{v.name}}
+                            {% endautoescape %}
+                                                        {#</a>#}
+                        </li>
+                {% endfor %}
+            </lo>
+        </td>
+
+
+
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; начало</a>
+            <a href="?page={{ page_obj.previous_page_number }}">предыдущий</a>
+        {% endif %}
+
+        <span class="current">
+            стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">далее</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">конец &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

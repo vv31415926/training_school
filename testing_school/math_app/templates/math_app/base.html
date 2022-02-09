@@ -20,6 +20,9 @@
         rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{% static 'math_app/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 </head>
 
 <body id="page-t    op">
@@ -77,15 +80,17 @@
                         <h6 class="collapse-header">Данные:</h6>
                         {% if not user.is_superuser %}
                             {%if user.pk %}
-                                <a class="collapse-item" href="{% url 'mathapp:user_lessons' student_id=user.pk %}"> Уроки </a>
+                                <a class="collapse-item" href="{% url 'mathapp:assigned_lessons' mathuser_id=user.pk %}"> Уроки </a>
                             {%endif%}
                         {% else %}
-                            <a class="collapse-item" href="{% url 'userapp:users_table' %}">Студенты</a>
-                            <a class="collapse-item" href="{% url 'mathapp:tasks_table' %}">Задачи</a>
+                            <a class="collapse-item" href="{% url 'user_app:users_table' %}">Студенты</a>
                         {% endif %}
+                        <a class="collapse-item" href="{% url 'math_app:partitions' %}">Разделы</a>
 
-
-                    </div>
+                        {% if user.is_authenticated %}
+                            <a class="collapse-item" href="{% url 'user_app:user_profile' pk=user.pk %}">Профиль</a>
+                        {% endif %}
+                     </div>
                 </div>
             </li>
 
@@ -238,10 +243,12 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Уроки
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Личный кабинет
-                                </a>
+                                {% if user.is_authenticated %}
+                                    <a class="dropdown-item" href="{% url 'user_app:user_profile' pk=user.pk %}">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Профиль
+                                    </a>
+                                {% endif %}
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     История
@@ -266,11 +273,13 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">{% block namepage %} {% endblock %}</h1>
+                        <div> {% block goto %} {% endblock %} </div>
+                        <h4 >{% block namepage %} {% endblock %}</h4>
                         <div>
 
-                        {% block button %} {% endblock %}
-
+                        {% if user.is_superuser %}
+                            {% block button %} {% endblock %}
+                        {% endif %}
 
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                             <i class="fas fa-download fa-sm text-white-50"></i>
